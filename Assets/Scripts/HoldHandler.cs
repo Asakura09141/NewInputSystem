@@ -21,5 +21,5 @@ public class HoldHandler : MonoBehaviour
         _playerInput.UI.HoldClick.performed -= OnHoldClick;
 
     public void OnHoldClick(InputAction.CallbackContext context) =>
-        Debug.Log("Зажатая кнопка");
+        Debug.Log("Hold Click");
 }

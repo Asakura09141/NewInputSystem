@@ -21,5 +21,5 @@ public class DoubleClickHandler : MonoBehaviour
         _playerInput.UI.DoubleClick.performed -= OnDoubleClick;
 
     public void OnDoubleClick(InputAction.CallbackContext context) =>
-        Debug.Log("Дабл клик");
+        Debug.Log("Double Click");
 }

@@ -21,5 +21,5 @@ public class ClickHandler : MonoBehaviour
         _playerInput.UI.Click.performed -= OnClick;
 
     public void OnClick(InputAction.CallbackContext context) =>
-        Debug.Log("Kлик");
+        Debug.Log("Click");
 }
