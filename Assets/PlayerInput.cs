@@ -120,13 +120,22 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Swipe"",
-                    ""type"": ""Value"",
+                    ""name"": ""Position"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""49c8c06b-dce9-48ea-bd73-0c32336fa311"",
-                    ""expectedControlType"": ""Delta"",
-                    ""processors"": ""StickDeadzone(min=0.1,max=1)"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Press"",
+                    ""type"": ""Button"",
+                    ""id"": ""169d8dea-361a-4d80-a199-6e474b6a164f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -155,11 +164,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d154edb6-8904-4817-8d0b-c9c2f582e6ad"",
-                    ""path"": ""<Mouse>/delta"",
+                    ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Mouse"",
-                    ""action"": ""Swipe"",
+                    ""action"": ""Position"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -171,6 +180,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Mouse"",
                     ""action"": ""HoldClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7db6b8da-c549-4ae6-9b01-6b73cdb344c9"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Press"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -196,7 +216,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_UI_DoubleClick = m_UI.FindAction("DoubleClick", throwIfNotFound: true);
         m_UI_HoldClick = m_UI.FindAction("HoldClick", throwIfNotFound: true);
         m_UI_Click = m_UI.FindAction("Click", throwIfNotFound: true);
-        m_UI_Swipe = m_UI.FindAction("Swipe", throwIfNotFound: true);
+        m_UI_Position = m_UI.FindAction("Position", throwIfNotFound: true);
+        m_UI_Press = m_UI.FindAction("Press", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -280,7 +301,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_DoubleClick;
     private readonly InputAction m_UI_HoldClick;
     private readonly InputAction m_UI_Click;
-    private readonly InputAction m_UI_Swipe;
+    private readonly InputAction m_UI_Position;
+    private readonly InputAction m_UI_Press;
     /// <summary>
     /// Provides access to input actions defined in input action map "UI".
     /// </summary>
@@ -305,9 +327,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Click => m_Wrapper.m_UI_Click;
         /// <summary>
-        /// Provides access to the underlying input action "UI/Swipe".
+        /// Provides access to the underlying input action "UI/Position".
         /// </summary>
-        public InputAction @Swipe => m_Wrapper.m_UI_Swipe;
+        public InputAction @Position => m_Wrapper.m_UI_Position;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/Press".
+        /// </summary>
+        public InputAction @Press => m_Wrapper.m_UI_Press;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -343,9 +369,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Click.started += instance.OnClick;
             @Click.performed += instance.OnClick;
             @Click.canceled += instance.OnClick;
-            @Swipe.started += instance.OnSwipe;
-            @Swipe.performed += instance.OnSwipe;
-            @Swipe.canceled += instance.OnSwipe;
+            @Position.started += instance.OnPosition;
+            @Position.performed += instance.OnPosition;
+            @Position.canceled += instance.OnPosition;
+            @Press.started += instance.OnPress;
+            @Press.performed += instance.OnPress;
+            @Press.canceled += instance.OnPress;
         }
 
         /// <summary>
@@ -366,9 +395,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Click.started -= instance.OnClick;
             @Click.performed -= instance.OnClick;
             @Click.canceled -= instance.OnClick;
-            @Swipe.started -= instance.OnSwipe;
-            @Swipe.performed -= instance.OnSwipe;
-            @Swipe.canceled -= instance.OnSwipe;
+            @Position.started -= instance.OnPosition;
+            @Position.performed -= instance.OnPosition;
+            @Position.canceled -= instance.OnPosition;
+            @Press.started -= instance.OnPress;
+            @Press.performed -= instance.OnPress;
+            @Press.canceled -= instance.OnPress;
         }
 
         /// <summary>
@@ -444,11 +476,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnClick(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Swipe" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Position" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSwipe(InputAction.CallbackContext context);
+        void OnPosition(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Press" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPress(InputAction.CallbackContext context);
     }
 }

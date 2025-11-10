@@ -34,13 +34,22 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Swipe",
-                    "type": "Value",
+                    "name": "Position",
+                    "type": "PassThrough",
                     "id": "49c8c06b-dce9-48ea-bd73-0c32336fa311",
-                    "expectedControlType": "Delta",
-                    "processors": "StickDeadzone(min=0.1,max=1)",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Press",
+                    "type": "Button",
+                    "id": "169d8dea-361a-4d80-a199-6e474b6a164f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -69,11 +78,11 @@
                 {
                     "name": "",
                     "id": "d154edb6-8904-4817-8d0b-c9c2f582e6ad",
-                    "path": "<Mouse>/delta",
+                    "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Mouse",
-                    "action": "Swipe",
+                    "action": "Position",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -85,6 +94,17 @@
                     "processors": "",
                     "groups": ";Mouse",
                     "action": "HoldClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7db6b8da-c549-4ae6-9b01-6b73cdb344c9",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Press",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
